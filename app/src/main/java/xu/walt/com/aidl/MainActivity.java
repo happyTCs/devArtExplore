@@ -33,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * git checkout -b dev
+     *git add -A
+     *git commit -m "branch logutil"
+     *git push origin dev:dev
+     *
+     * @param outState
+     */
 
 //    @Override
 //    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
