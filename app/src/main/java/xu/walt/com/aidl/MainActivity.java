@@ -12,6 +12,7 @@ import java.io.Serializable;
 
 import xu.walt.com.aidl.activity.SecordActivity;
 import xu.walt.com.aidl.bean.Person;
+import xu.walt.com.aidl.utils.LogUtil;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -54,5 +55,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         String extra = savedInstanceState.getString("extra");
         Log.i(TAG, "onRestoreInstanceState: "+extra);
+        LogUtil.i(TAG,extra);
+
     }
 }
