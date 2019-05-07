@@ -1,10 +1,12 @@
 package xu.walt.com.aidl;
 
 import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.PersistableBundle;
+import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,10 +21,13 @@ import java.util.TimerTask;
 
 import xu.walt.com.aidl.activity.SecordActivity;
 import xu.walt.com.aidl.bean.Person;
+import xu.walt.com.aidl.broadcastReceiver.ScreenControlAlarmReceiver;
 import xu.walt.com.aidl.utils.LogUtil;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    private static final long INTERVAL = 3 * 1000;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +40,24 @@ public class MainActivity extends AppCompatActivity {
         //3、timer
 //        initTimer();
         //4、Alarm机制 写在service里
-        initAlarm();
+//        initAlarm();
+        //4.2 写在broadcast 里
+        initBroadCastAlarm();
 
 
+    }
 
+    private void initBroadCastAlarm() {
+       AlarmManager alarmManager= (AlarmManager) getApplicationContext().getSystemService(ALARM_SERVICE);
+       Intent alarmIntent =new Intent(getApplicationContext(), ScreenControlAlarmReceiver.class)
+               .setAction("intent_alarm_log");
+        PendingIntent pendingIntent= PendingIntent.getBroadcast(getApplicationContext(),0
+                    ,alarmIntent,0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,   System.currentTimeMillis() ,INTERVAL, pendingIntent);
+        } else {
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,  SystemClock.elapsedRealtime(),INTERVAL-1000, pendingIntent);
+        }
     }
 
     private void initAlarm() {

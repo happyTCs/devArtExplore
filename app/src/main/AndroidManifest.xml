@@ -32,7 +32,11 @@
                 <action android:name="xu.walt.com.aidl.LongRunningService"/>
             </intent-filter>-->
         </service>
-
+        <receiver android:name=".broadcastReceiver.ScreenControlAlarmReceiver">
+            <intent-filter>
+                <action android:name="intent_alarm_log"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
