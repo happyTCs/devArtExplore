@@ -58,6 +58,16 @@ public class MainActivity extends AppCompatActivity {
         } else {
             alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,  SystemClock.elapsedRealtime(),INTERVAL-1000, pendingIntent);
         }
+
+        /**
+         * 3.取消闹钟
+         只需要取消同一个PendingIntent 即可。
+
+         AlarmManager alarmService = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+         Intent alarmIntent = new Intent(context, ScreenControlAlarmReceiver.class).setAction("intent_alarm_log");
+         PendingIntent broadcast = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
+         alarmService.cancel(broadcast);
+         **/
     }
 
     private void initAlarm() {
