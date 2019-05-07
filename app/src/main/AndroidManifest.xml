@@ -27,6 +27,12 @@
             </intent-filter>
         </service>
 
+        <service android:name=".LongRunningService">
+           <!-- <intent-filter >
+                <action android:name="xu.walt.com.aidl.LongRunningService"/>
+            </intent-filter>-->
+        </service>
+
     </application>
 
 </manifest>
