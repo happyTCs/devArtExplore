@@ -11,6 +11,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import org.xml.sax.helpers.LocatorImpl;
 
@@ -19,12 +20,13 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import xu.walt.com.aidl.activity.ContentProvideActivity;
 import xu.walt.com.aidl.activity.SecordActivity;
 import xu.walt.com.aidl.bean.Person;
 import xu.walt.com.aidl.broadcastReceiver.ScreenControlAlarmReceiver;
 import xu.walt.com.aidl.utils.LogUtil;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
     private static final long INTERVAL = 3 * 1000;
 
@@ -42,21 +44,21 @@ public class MainActivity extends AppCompatActivity {
         //4、Alarm机制 写在service里
 //        initAlarm();
         //4.2 写在broadcast 里
-        initBroadCastAlarm();
+//        initBroadCastAlarm();
 
 
     }
 
     private void initBroadCastAlarm() {
-       AlarmManager alarmManager= (AlarmManager) getApplicationContext().getSystemService(ALARM_SERVICE);
-       Intent alarmIntent =new Intent(getApplicationContext(), ScreenControlAlarmReceiver.class)
-               .setAction("intent_alarm_log");
-        PendingIntent pendingIntent= PendingIntent.getBroadcast(getApplicationContext(),0
-                    ,alarmIntent,0);
+        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(ALARM_SERVICE);
+        Intent alarmIntent = new Intent(getApplicationContext(), ScreenControlAlarmReceiver.class)
+                .setAction("intent_alarm_log");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0
+                , alarmIntent, 0);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,   System.currentTimeMillis() ,INTERVAL, pendingIntent);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), INTERVAL, pendingIntent);
         } else {
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,  SystemClock.elapsedRealtime(),INTERVAL-1000, pendingIntent);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime(), INTERVAL - 1000, pendingIntent);
         }
 
         /**
@@ -72,14 +74,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void initAlarm() {
 
-        Intent intent = new Intent(getApplicationContext(),LongRunningService.class);
+        Intent intent = new Intent(getApplicationContext(), LongRunningService.class);
         startService(intent);
     }
 
     private void initInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             String extra = savedInstanceState.getString("extra");
-            Log.i(TAG, "onCreate: "+extra);
+            Log.i(TAG, "onCreate: " + extra);
         }
     }
 
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         Person person = new Person();
         person.setName("zhangsan");
         Intent intent = new Intent(this, SecordActivity.class);
-        intent.putExtra("person_data",  person);
+        intent.putExtra("person_data", person);
         startActivity(intent);
     }
 
@@ -101,16 +103,15 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         //以下是几种调度方法
-        long time =22;
-        long time2 =System.currentTimeMillis();
+        long time = 22;
+        long time2 = System.currentTimeMillis();
         Date date = new Date(time2);
-        long period=22;
+        long period = 22;
         //firstTime为Date类型,period为long，表示从firstTime时刻开始，每隔period毫秒执行一次。
-        timer.schedule(task,date,period);
+        timer.schedule(task, date, period);
         //delay为long,period为long：从现在起过delay毫秒以后，每隔period毫秒执行一次。
-        timer.schedule(task,time2,period);
+        timer.schedule(task, time2, period);
     }
-
 
 
 //    @Override
@@ -126,15 +127,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.i(TAG, "onSaveInstanceState: ");
-        outState.putString("extra","test");
+        outState.putString("extra", "test");
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         String extra = savedInstanceState.getString("extra");
-        Log.i(TAG, "onRestoreInstanceState: "+extra);
-        LogUtil.i(TAG,extra);
+        Log.i(TAG, "onRestoreInstanceState: " + extra);
+        LogUtil.i(TAG, extra);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_cp:
+                Intent intent = new Intent(this, ContentProvideActivity.class);
+                startActivity(intent);
+
+                break;
+            case R.id.btn_contract:
+                Intent intent2 = new Intent();
+                intent2.setAction("bb");
+                startActivity(intent2);
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="xu.walt.com.aidl">
-
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -37,6 +37,20 @@
                 <action android:name="intent_alarm_log"/>
             </intent-filter>
         </receiver>
+        <provider
+            android:authorities="xu.walt.com.aidl.contentProvider.MyProvider"
+            android:name=".contentProvider.MyProvider"/>
+        <activity android:name=".activity.ContentProvideActivity">
+            <intent-filter>
+                <action android:name="cp"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.ContractActivity">
+            <intent-filter>
+                <action android:name="bb"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

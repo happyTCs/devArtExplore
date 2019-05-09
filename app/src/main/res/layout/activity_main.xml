@@ -7,6 +7,7 @@
     tools:context="xu.walt.com.aidl.MainActivity">
 
     <TextView
+        android:id="@+id/tv_helloworld"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
@@ -14,5 +15,21 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/btn_cp"
+        android:onClick="onClick"
+        app:layout_constraintTop_toBottomOf="@id/tv_helloworld"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳转到contentProvideActivity"/>
 
+    <Button
+        android:id="@+id/btn_contract"
+        android:onClick="onClick"
+        app:layout_constraintTop_toBottomOf="@id/btn_cp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳转到contractActivity"/>
 </android.support.constraint.ConstraintLayout>
